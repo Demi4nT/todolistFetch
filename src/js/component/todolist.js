@@ -4,7 +4,6 @@ export const TodoList = () => {
     const [task, setTask] = useState (" ");
     const [taskList, settaskList] = useState([]);
     const [backtask, setBacktask] = useState (" ")
-    const sentTask = [{label: task, done: false}]
 
     useEffect( () => {
         getTask();
@@ -25,12 +24,12 @@ export const TodoList = () => {
         .catch(error => console.log('error', error));
     };
 
-    function putTask (sentTask) {
+    function putTask (newList) {
 
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
-        var raw = JSON.stringify(sentTask);
+        var raw = JSON.stringify(newList);
 
         var requestOptions = {
         method: 'PUT',
@@ -49,12 +48,14 @@ export const TodoList = () => {
         <div className='caja'>
             <h1>To dos</h1>
             <input onChange={ (e) => {setTask(e.target.value)}} />
-            <button onClick={ () => {putTask(sentTask)}} >
+            <button onClick={ () => {
+                let newList = taskList.concat({label: task, done: false})
+                putTask(newList); settaskList(newList) }} >
                 Añadir
             </button>
             {taskList.map( (value, key) => {
                 return (<li className='list-group-item list-group-item-light' key={key}>
-                    {value}
+                    {value.label}
                     <div className='myDiv'>
                         <button className='btn btn-warning' onClick={ () => {settaskList(taskList.filter( (item, i) => {
                             return (i !== key)
