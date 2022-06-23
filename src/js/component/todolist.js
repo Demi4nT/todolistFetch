@@ -57,9 +57,13 @@ export const TodoList = () => {
                 return (<li className='list-group-item list-group-item-light' key={key}>
                     {value.label}
                     <div className='myDiv'>
-                        <button className='btn btn-warning' onClick={ () => {settaskList(taskList.filter( (item, i) => {
-                            return (i !== key)
-                        } ))}} > x
+                        <button className='btn btn-warning' onClick={ () => {
+                            let deleteList = (taskList.filter( (item, i) => {
+                                return (i !== key)
+                            } ))
+                            settaskList(deleteList)
+                            putTask(deleteList)
+                            }} > x
                        </button>
                     </div>
                 </li>)
