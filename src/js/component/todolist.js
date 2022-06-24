@@ -3,7 +3,6 @@ import React, {useState, useEffect} from 'react';
 export const TodoList = () => {
     const [task, setTask] = useState (" ");
     const [taskList, settaskList] = useState([]);
-    const [backtask, setBacktask] = useState (" ")
 
     useEffect( () => {
         getTask();
@@ -19,7 +18,7 @@ export const TodoList = () => {
         fetch("https://assets.breatheco.de/apis/fake/todos/user/demiancito", requestOptions)
         .then(response => response.json())
         .then(result => {
-                        setBacktask(result)
+                        settaskList(result)
                         console.log(result)})
         .catch(error => console.log('error', error));
     };
@@ -50,9 +49,14 @@ export const TodoList = () => {
             <input onChange={ (e) => {setTask(e.target.value)}} />
             <button onClick={ () => {
                 let newList = taskList.concat({label: task, done: false})
-                putTask(newList); settaskList(newList) }} >
+                putTask(newList); settaskList(newList)
+                console.log(taskList) }} >
                 Añadir
             </button>
+            <button className='limpiador' onClick={ () => {
+                let clearAll = []
+                settaskList(clearAll); putTask(clearAll)
+            }}>Limpiar</button>
             {taskList.map( (value, key) => {
                 return (<li className='list-group-item list-group-item-light' key={key}>
                     {value.label}
@@ -63,6 +67,7 @@ export const TodoList = () => {
                             } ))
                             settaskList(deleteList)
                             putTask(deleteList)
+                            console.log(taskList)
                             }} > x
                        </button>
                     </div>
