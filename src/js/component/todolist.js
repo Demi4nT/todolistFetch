@@ -44,37 +44,37 @@ export const TodoList = () => {
     }
 
     return (
-        <div className='caja'>
-            <h1>To dos</h1>
-            <input onChange={ (e) => {setTask(e.target.value)}} />
-            <button onClick={ () => {
+        <div className='caja container-fluid col-9'>
+            <h1 className='fw-bold font-monospace'>To dos</h1>
+            <input className='input-group mb-3' placeholder='Agregar una tarea' onChange={ (e) => {setTask(e.target.value)}} />
+            <button className='btn btn-outline-dark' onClick={ () => {
                 let newList = taskList.concat({label: task, done: false})
                 putTask(newList); settaskList(newList)
                 console.log(taskList) }} >
                 Añadir
             </button>
-            <button className='limpiador' onClick={ () => {
+            <button className='btn btn-outline-dark' onClick={ () => {
                 let clearAll = []
                 settaskList(clearAll); putTask(clearAll)
             }}>Limpiar</button>
             {taskList.map( (value, key) => {
-                return (<li className='list-group-item list-group-item-light' key={key}>
+                return (<ul className='list-group'><li className='list-group-item list-group-item-light' key={key}>
                     {value.label}
-                    <div className='myDiv'>
-                        <button className='btn btn-warning' onClick={ () => {
+                    <div className='myDiv position-absolute top-0 end-0'>
+                        <button className='btn-close' onClick={ () => {
                             let deleteList = (taskList.filter( (item, i) => {
                                 return (i !== key)
                             } ))
                             settaskList(deleteList)
                             putTask(deleteList)
                             console.log(taskList)
-                            }} > x
+                            }} >
                        </button>
                     </div>
-                </li>)
+                </li></ul>)
             }    
             )}
-            <p>Hay {taskList.length} tareas agregadas!</p>
+            <p className='fst-italic'>Hay {taskList.length} tareas agregadas!</p>
         </div>
     )
 }
